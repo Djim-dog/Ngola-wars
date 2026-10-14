@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+:root {
+  --nw-gold: #f59e0b;
+  --nw-gold-light: #fbbf24;
+  --nw-red: #dc2626;
+  --nw-blue: #2563eb;
+  --nw-dark: #0c0a09;
+  --nw-panel: rgba(28, 25, 23, 0.92);
+  --nw-border: rgba(245, 158, 11, 0.35);
+}
+
+body {
+  background: #0c0a09;
+  color: #fafaf9;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  min-height: 100dvh;
+}
+
+/* Fundo de jogo global */
+.nw-bg {
+  background:
+    radial-gradient(ellipse at top, rgba(120, 53, 15, 0.35) 0%, transparent 55%),
+    radial-gradient(ellipse at bottom, rgba(127, 29, 29, 0.25) 0%, transparent 50%),
+    linear-gradient(180deg, #1c1917 0%, #0c0a09 100%);
+  min-height: 100dvh;
+}
+
+.nw-panel {
+  background: var(--nw-panel);
+  border: 1px solid var(--nw-border);
+  border-radius: 1rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+}
+
+.nw-btn-gold {
+  background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%);
+  color: #1c1917;
+  font-weight: 700;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 0 #92400e, 0 6px 16px rgba(245, 158, 11, 0.3);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.nw-btn-gold:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #92400e;
+}
+.nw-btn-gold:disabled {
+  opacity: 0.45;
+}
+
+.nw-btn-ghost {
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+  border-radius: 0.75rem;
+  background: rgba(245, 158, 11, 0.06);
+}
+
+.nw-nav {
+  background: rgba(12, 10, 9, 0.95);
+  border-top: 1px solid rgba(245, 158, 11, 0.2);
+  backdrop-filter: blur(16px);
+}
+
+.nw-title {
+  background: linear-gradient(90deg, #fbbf24, #f59e0b, #ef4444);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+/* Kingdom card on map */
+.nw-kingdom-card {
+  background: linear-gradient(135deg, rgba(41, 37, 36, 0.95), rgba(28, 25, 23, 0.98));
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+.nw-kingdom-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.05), transparent);
+  pointer-events: none;
+}
+
+/* ===== Animações combate ===== */
+@keyframes nw-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-3px) rotate(-2deg); }
+  40% { transform: translateX(3px) rotate(2deg); }
+  60% { transform: translateX(-2px); }
+  80% { transform: translateX(2px); }
+}
+@keyframes nw-burst {
+  0% { transform: scale(0.3); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.9; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+@keyframes nw-float-up {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-28px) scale(1.15); opacity: 0; }
+}
+@keyframes nw-piece-hit {
+  0% { transform: scale(1); filter: brightness(1); }
+  30% { transform: scale(1.15); filter: brightness(1.8); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+@keyframes nw-flash {
+  0% { background-color: rgba(255, 200, 50, 0.7); }
+  100% { background-color: transparent; }
+}
+@keyframes nw-slide {
+  from { opacity: 0.5; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes nw-crown {
+  0% { transform: scale(0.5) rotate(-20deg); opacity: 0; }
+  50% { transform: scale(1.4) rotate(10deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+@keyframes nw-glow-king {
+  0%, 100% { box-shadow: 0 0 4px 1px rgba(255, 200, 50, 0.5); }
+  50% { box-shadow: 0 0 14px 4px rgba(255, 215, 0, 0.9); }
+}
+
+.nw-shake { animation: nw-shake 0.35s ease-in-out; }
+.nw-burst { animation: nw-burst 0.55s ease-out forwards; pointer-events: none; }
+.nw-float-up { animation: nw-float-up 0.9s ease-out forwards; pointer-events: none; }
+.nw-piece-hit { animation: nw-piece-hit 0.4s ease-out; }
+.nw-flash { animation: nw-flash 0.45s ease-out; }
+.nw-slide-in { animation: nw-slide 0.28s ease-out; }
+.nw-crown { animation: nw-crown 0.7s ease-out; }
+.nw-king-glow { animation: nw-glow-king 1.2s ease-in-out 2; }
