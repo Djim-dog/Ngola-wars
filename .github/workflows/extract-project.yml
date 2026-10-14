@@ -1,0 +1,44 @@
+name: Extract NGOLA WAR project ZIP
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Find and extract project ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          ZIP_FILE="ngola-war-premium-update.zip"
+          if [ ! -f "$ZIP_FILE" ]; then
+            echo "Could not find $ZIP_FILE in the repository root."
+            echo "Upload the ZIP to the root of the repository with this exact name, then run this workflow again."
+            exit 1
+          fi
+          mkdir -p /tmp/ngola-war-extract
+          unzip -o "$ZIP_FILE" -d /tmp/ngola-war-extract
+          cp -a /tmp/ngola-war-extract/. .
+          rm -f "$ZIP_FILE"
+          rm -rf /tmp/ngola-war-extract
+
+      - name: Commit extracted project files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Extract NGOLA WAR project files"
+            git push
+          fi
